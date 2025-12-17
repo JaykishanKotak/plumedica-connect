@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
+import plumedicalogo from '@/assets/plumedica-logo.png';
 
 const navItems = ['Home', 'About', 'Services', 'Product', 'Contact'];
 
@@ -32,25 +33,15 @@ const Header = () => {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="flex items-center gap-3"
+            className="flex items-center gap-2"
           >
-            <div className="relative">
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-                className="w-10 h-10 rounded-xl bg-gradient-hero flex items-center justify-center"
-              >
-                <span className="text-primary-foreground font-display font-bold text-lg">P</span>
-              </motion.div>
-              <motion.div
-                animate={{ scale: [1, 1.2, 1] }}
-                transition={{ duration: 2, repeat: Infinity }}
-                className="absolute -inset-1 rounded-xl bg-primary/20 -z-10"
-              />
-            </div>
-            <span className="font-display font-bold text-2xl text-foreground">
-              Plume<span className="text-gradient">dica</span>
-            </span>
+            <motion.img
+              src={plumedicalogo}
+              alt="Plumedica Logo"
+              className="h-14 w-auto"
+              animate={{ scale: [1, 1.02, 1] }}
+              transition={{ duration: 3, repeat: Infinity }}
+            />
           </motion.div>
 
           {/* Desktop Navigation */}
