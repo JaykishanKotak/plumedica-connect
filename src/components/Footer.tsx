@@ -1,5 +1,5 @@
-import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin } from 'lucide-react';
+import plumedicalogo from '@/assets/plumedica-logo.png';
 
 const Footer = () => {
   const footerLinks = {
@@ -16,10 +16,7 @@ const Footer = () => {
           {/* Brand */}
           <div className="lg:col-span-2">
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 rounded-xl bg-gradient-hero flex items-center justify-center">
-                <span className="text-primary-foreground font-display font-bold text-lg">P</span>
-              </div>
-              <span className="font-display font-bold text-2xl">Plumedica</span>
+              <img src={plumedicalogo} alt="Plumedica Logo" className="h-16 w-auto" />
             </div>
             <p className="text-background/70 mb-6 max-w-sm">
               Your complete healthcare ecosystem connecting patients, doctors, hospitals, 

@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, Shield, Clock, Users } from 'lucide-react';
+import plumedicalogo from '@/assets/plumedica-logo.png';
 
 const HeroSection = () => {
   return (
@@ -7,7 +8,7 @@ const HeroSection = () => {
       {/* Background Elements */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute top-20 left-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-secondary/10 rounded-full blur-3xl" />
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ duration: 60, repeat: Infinity, ease: 'linear' }}
@@ -29,7 +30,7 @@ const HeroSection = () => {
               transition={{ delay: 0.2 }}
               className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full text-primary font-medium text-sm mb-6"
             >
-              <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
+              <span className="w-2 h-2 bg-secondary rounded-full animate-pulse" />
               Transforming Healthcare Digitally
             </motion.div>
 
@@ -46,7 +47,7 @@ const HeroSection = () => {
 
             <div className="flex flex-wrap gap-4 mb-12">
               <motion.button
-                whileHover={{ scale: 1.05, boxShadow: '0 0 40px hsl(174 72% 40% / 0.3)' }}
+                whileHover={{ scale: 1.05, boxShadow: '0 0 40px hsl(210 70% 45% / 0.3)' }}
                 whileTap={{ scale: 0.95 }}
                 className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-hero text-primary-foreground rounded-xl font-semibold shadow-elevated"
               >
@@ -76,8 +77,8 @@ const HeroSection = () => {
                   transition={{ delay: 0.6 + index * 0.1 }}
                   className="text-center"
                 >
-                  <div className="inline-flex items-center justify-center w-12 h-12 bg-primary/10 rounded-xl mb-2">
-                    <stat.icon className="w-6 h-6 text-primary" />
+                  <div className="inline-flex items-center justify-center w-12 h-12 bg-secondary/20 rounded-xl mb-2">
+                    <stat.icon className="w-6 h-6 text-secondary" />
                   </div>
                   <div className="font-display font-bold text-2xl text-foreground">{stat.value}</div>
                   <div className="text-sm text-muted-foreground">{stat.label}</div>
@@ -98,15 +99,15 @@ const HeroSection = () => {
               <motion.div
                 animate={{ rotate: -360 }}
                 transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
-                className="absolute inset-12 rounded-full border-2 border-dashed border-primary/20"
+                className="absolute inset-12 rounded-full border-2 border-dashed border-secondary/30"
               />
               
               <motion.div
-                className="absolute inset-24 rounded-full bg-gradient-hero shadow-glow flex items-center justify-center"
-                animate={{ scale: [1, 1.05, 1] }}
+                className="absolute inset-16 rounded-full bg-card shadow-glow flex items-center justify-center p-8"
+                animate={{ scale: [1, 1.03, 1] }}
                 transition={{ duration: 3, repeat: Infinity }}
               >
-                <span className="text-primary-foreground font-display font-bold text-3xl">P</span>
+                <img src={plumedicalogo} alt="Plumedica" className="w-full h-full object-contain" />
               </motion.div>
 
               {/* Orbiting Icons */}
