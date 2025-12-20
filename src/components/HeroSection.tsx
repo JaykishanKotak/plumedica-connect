@@ -5,15 +5,49 @@ import plumedicalogo from '@/assets/plumedica-logo.png';
 const HeroSection = () => {
   return (
     <section id="home" className="relative min-h-screen flex items-center pt-20 overflow-hidden">
-      {/* Background Elements */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-secondary/10 rounded-full blur-3xl" />
+      {/* Background Video */}
+      <div className="absolute inset-0 -z-20">
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="w-full h-full object-cover"
+        >
+          <source
+            src="https://videos.pexels.com/video-files/7579962/7579962-uhd_2560_1440_25fps.mp4"
+            type="video/mp4"
+          />
+        </video>
+        {/* Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/80 to-background/60" />
+      </div>
+
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0 -z-10 pointer-events-none">
         <motion.div
-          animate={{ rotate: 360 }}
-          transition={{ duration: 60, repeat: Infinity, ease: 'linear' }}
-          className="absolute top-1/4 right-1/4 w-[600px] h-[600px] border border-primary/10 rounded-full"
+          animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
+          transition={{ duration: 8, repeat: Infinity }}
+          className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl"
         />
+        <motion.div
+          animate={{ scale: [1, 1.3, 1], opacity: [0.2, 0.4, 0.2] }}
+          transition={{ duration: 10, repeat: Infinity, delay: 2 }}
+          className="absolute bottom-20 right-10 w-96 h-96 bg-secondary/15 rounded-full blur-3xl"
+        />
+        
+        {/* Heartbeat Wave Effect */}
+        <svg className="absolute bottom-0 left-0 w-full h-32 opacity-20" viewBox="0 0 1200 100" preserveAspectRatio="none">
+          <motion.path
+            d="M0,50 L200,50 L220,20 L240,80 L260,30 L280,70 L300,50 L500,50 L520,20 L540,80 L560,30 L580,70 L600,50 L800,50 L820,20 L840,80 L860,30 L880,70 L900,50 L1200,50"
+            fill="none"
+            stroke="hsl(var(--primary))"
+            strokeWidth="2"
+            initial={{ pathLength: 0 }}
+            animate={{ pathLength: 1 }}
+            transition={{ duration: 3, repeat: Infinity }}
+          />
+        </svg>
       </div>
 
       <div className="container mx-auto px-6">
@@ -28,7 +62,7 @@ const HeroSection = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full text-primary font-medium text-sm mb-6"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 backdrop-blur-sm rounded-full text-primary font-medium text-sm mb-6"
             >
               <span className="w-2 h-2 bg-secondary rounded-full animate-pulse" />
               Transforming Healthcare Digitally
@@ -57,7 +91,7 @@ const HeroSection = () => {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="inline-flex items-center gap-2 px-8 py-4 bg-card border border-border text-foreground rounded-xl font-semibold shadow-soft"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-card/80 backdrop-blur-sm border border-border text-foreground rounded-xl font-semibold shadow-soft"
               >
                 Watch Demo
               </motion.button>
@@ -75,7 +109,7 @@ const HeroSection = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.6 + index * 0.1 }}
-                  className="text-center"
+                  className="text-center p-4 bg-card/60 backdrop-blur-sm rounded-xl"
                 >
                   <div className="inline-flex items-center justify-center w-12 h-12 bg-secondary/20 rounded-xl mb-2">
                     <stat.icon className="w-6 h-6 text-secondary" />
@@ -103,7 +137,7 @@ const HeroSection = () => {
               />
               
               <motion.div
-                className="absolute inset-16 rounded-full bg-card shadow-glow flex items-center justify-center p-8"
+                className="absolute inset-16 rounded-full bg-white shadow-glow flex items-center justify-center p-8"
                 animate={{ scale: [1, 1.03, 1] }}
                 transition={{ duration: 3, repeat: Infinity }}
               >
@@ -123,7 +157,7 @@ const HeroSection = () => {
                     initial={{ opacity: 0, scale: 0 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.8 + index * 0.1 }}
-                    className="absolute w-16 h-16 bg-card rounded-2xl shadow-elevated flex items-center justify-center text-2xl"
+                    className="absolute w-16 h-16 bg-card/90 backdrop-blur-sm rounded-2xl shadow-elevated flex items-center justify-center text-2xl"
                     style={{
                       left: `calc(50% + ${x}px - 32px)`,
                       top: `calc(50% + ${y}px - 32px)`,
