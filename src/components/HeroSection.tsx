@@ -1,10 +1,9 @@
 import { motion } from 'framer-motion';
-import { ArrowRight, Shield, Clock, Users } from 'lucide-react';
 import plumedicalogo from '@/assets/plumedica-logo.png';
 
 const HeroSection = () => {
   return (
-    <section id="home" className="relative min-h-screen flex items-center pt-20 overflow-hidden">
+    <section id="home" className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
       {/* Background Video */}
       <div className="absolute inset-0 -z-20">
         <video
@@ -20,7 +19,7 @@ const HeroSection = () => {
           />
         </video>
         {/* Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/80 to-background/60" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/70 to-background/50" />
       </div>
 
       {/* Animated Background Elements */}
@@ -51,123 +50,57 @@ const HeroSection = () => {
       </div>
 
       <div className="container mx-auto px-6">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Left Content */}
+        <div className="flex flex-col items-center justify-center text-center">
+          {/* Animated Logo */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, ease: 'easeOut' }}
+            className="relative"
           >
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 backdrop-blur-sm rounded-full text-primary font-medium text-sm mb-6"
+              animate={{ 
+                scale: [1, 1.05, 1],
+              }}
+              transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+              className="w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96"
+              style={{
+                filter: 'drop-shadow(0 0 50px hsl(210 70% 45% / 0.5))',
+              }}
             >
-              <span className="w-2 h-2 bg-secondary rounded-full animate-pulse" />
-              Transforming Healthcare Digitally
+              <img 
+                src={plumedicalogo} 
+                alt="Plumedica" 
+                className="w-full h-full object-contain"
+              />
             </motion.div>
-
-            <h1 className="font-display text-5xl lg:text-6xl font-bold text-foreground leading-tight mb-6">
-              Your Complete
-              <span className="text-gradient block">Healthcare</span>
-              Ecosystem
-            </h1>
-
-            <p className="text-lg text-muted-foreground mb-8 max-w-lg">
-              Connecting patients, doctors, hospitals, pharmacies, and diagnostics 
-              in one unified platform. Experience healthcare reimagined for the digital age.
-            </p>
-
-            <div className="flex flex-wrap gap-4 mb-12">
-              <motion.button
-                whileHover={{ scale: 1.05, boxShadow: '0 0 40px hsl(210 70% 45% / 0.3)' }}
-                whileTap={{ scale: 0.95 }}
-                className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-hero text-primary-foreground rounded-xl font-semibold shadow-elevated"
-              >
-                Explore Platform
-                <ArrowRight size={20} />
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="inline-flex items-center gap-2 px-8 py-4 bg-card/80 backdrop-blur-sm border border-border text-foreground rounded-xl font-semibold shadow-soft"
-              >
-                Watch Demo
-              </motion.button>
-            </div>
-
-            {/* Stats */}
-            <div className="grid grid-cols-3 gap-6">
-              {[
-                { icon: Users, value: '50K+', label: 'Active Users' },
-                { icon: Shield, value: '100%', label: 'Secure' },
-                { icon: Clock, value: '24/7', label: 'Support' },
-              ].map((stat, index) => (
-                <motion.div
-                  key={stat.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.6 + index * 0.1 }}
-                  className="text-center p-4 bg-card/60 backdrop-blur-sm rounded-xl"
-                >
-                  <div className="inline-flex items-center justify-center w-12 h-12 bg-secondary/20 rounded-xl mb-2">
-                    <stat.icon className="w-6 h-6 text-secondary" />
-                  </div>
-                  <div className="font-display font-bold text-2xl text-foreground">{stat.value}</div>
-                  <div className="text-sm text-muted-foreground">{stat.label}</div>
-                </motion.div>
-              ))}
-            </div>
+            
+            {/* Pulse Ring Effect */}
+            <motion.div
+              animate={{ scale: [1, 1.5], opacity: [0.5, 0] }}
+              transition={{ duration: 2, repeat: Infinity, ease: 'easeOut' }}
+              className="absolute inset-0 rounded-full border-2 border-primary/50"
+            />
+            <motion.div
+              animate={{ scale: [1, 1.5], opacity: [0.5, 0] }}
+              transition={{ duration: 2, repeat: Infinity, ease: 'easeOut', delay: 0.5 }}
+              className="absolute inset-0 rounded-full border-2 border-secondary/50"
+            />
           </motion.div>
 
-          {/* Right Visual */}
+          {/* Tagline */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="relative hidden lg:block"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 0.8 }}
+            className="mt-8"
           >
-            <div className="relative w-full aspect-square max-w-lg mx-auto">
-              {/* Central Circle */}
-              <motion.div
-                animate={{ rotate: -360 }}
-                transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
-                className="absolute inset-12 rounded-full border-2 border-dashed border-secondary/30"
-              />
-              
-              <motion.div
-                className="absolute inset-16 rounded-full bg-white shadow-glow flex items-center justify-center p-8"
-                animate={{ scale: [1, 1.03, 1] }}
-                transition={{ duration: 3, repeat: Infinity }}
-              >
-                <img src={plumedicalogo} alt="Plumedica" className="w-full h-full object-contain" />
-              </motion.div>
-
-              {/* Orbiting Icons */}
-              {['👨‍⚕️', '🏥', '💊', '🔬', '👤', '💼'].map((emoji, index) => {
-                const angle = (index * 60 * Math.PI) / 180;
-                const radius = 180;
-                const x = Math.cos(angle) * radius;
-                const y = Math.sin(angle) * radius;
-
-                return (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, scale: 0 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.8 + index * 0.1 }}
-                    className="absolute w-16 h-16 bg-card/90 backdrop-blur-sm rounded-2xl shadow-elevated flex items-center justify-center text-2xl"
-                    style={{
-                      left: `calc(50% + ${x}px - 32px)`,
-                      top: `calc(50% + ${y}px - 32px)`,
-                    }}
-                  >
-                    {emoji}
-                  </motion.div>
-                );
-              })}
-            </div>
+            <h1 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-foreground">
+              Your Complete <span className="text-gradient">Healthcare</span> Ecosystem
+            </h1>
+            <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
+              Connecting patients, doctors, hospitals, pharmacies, and diagnostics in one unified platform.
+            </p>
           </motion.div>
         </div>
       </div>
