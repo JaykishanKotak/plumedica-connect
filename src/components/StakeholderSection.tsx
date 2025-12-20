@@ -1,6 +1,7 @@
 import { useRef, useEffect, useState } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { User, Stethoscope, Building2, Pill, TestTube, Briefcase, Handshake } from 'lucide-react';
+import plumedicalogo from '@/assets/plumedica-logo.png';
 
 const stakeholders = [
   {
@@ -9,7 +10,8 @@ const stakeholders = [
     title: 'Patients',
     description: 'Access world-class healthcare from anywhere. Book appointments, view medical records, and consult doctors online.',
     features: ['Online Consultations', 'Medical Records', 'Appointment Booking', 'Health Tracking'],
-    color: 'from-teal-500 to-cyan-500',
+    color: 'from-primary to-primary/70',
+    bgColor: 'bg-primary/10',
   },
   {
     id: 'doctors',
@@ -17,7 +19,8 @@ const stakeholders = [
     title: 'Doctors',
     description: 'Streamline your practice with our comprehensive platform. Manage patients, schedules, and consultations efficiently.',
     features: ['Patient Management', 'Digital Prescriptions', 'Schedule Management', 'Telemedicine'],
-    color: 'from-blue-500 to-indigo-500',
+    color: 'from-secondary to-secondary/70',
+    bgColor: 'bg-secondary/10',
   },
   {
     id: 'hospitals',
@@ -25,7 +28,8 @@ const stakeholders = [
     title: 'Hospitals',
     description: 'Transform hospital operations with integrated management systems for beds, staff, and resources.',
     features: ['Bed Management', 'Staff Coordination', 'Resource Planning', 'Analytics Dashboard'],
-    color: 'from-violet-500 to-purple-500',
+    color: 'from-accent to-accent/70',
+    bgColor: 'bg-accent/10',
   },
   {
     id: 'pharmacies',
@@ -33,7 +37,8 @@ const stakeholders = [
     title: 'Pharmacies',
     description: 'Connect with patients and healthcare providers. Manage inventory and fulfill prescriptions digitally.',
     features: ['Inventory Management', 'E-Prescriptions', 'Home Delivery', 'Order Tracking'],
-    color: 'from-orange-500 to-red-500',
+    color: 'from-primary to-secondary',
+    bgColor: 'bg-primary/10',
   },
   {
     id: 'diagnostics',
@@ -41,7 +46,8 @@ const stakeholders = [
     title: 'Diagnostics',
     description: 'Offer seamless diagnostic services with online booking, sample collection, and digital reports.',
     features: ['Online Booking', 'Home Collection', 'Digital Reports', 'Lab Integration'],
-    color: 'from-emerald-500 to-green-500',
+    color: 'from-secondary to-accent',
+    bgColor: 'bg-secondary/10',
   },
   {
     id: 'jobs',
@@ -49,7 +55,8 @@ const stakeholders = [
     title: 'Job Network',
     description: 'Find healthcare opportunities or recruit top talent. Connect professionals with institutions.',
     features: ['Job Listings', 'Talent Search', 'CV Builder', 'Interview Scheduling'],
-    color: 'from-amber-500 to-yellow-500',
+    color: 'from-accent to-primary',
+    bgColor: 'bg-accent/10',
   },
   {
     id: 'partners',
@@ -57,7 +64,8 @@ const stakeholders = [
     title: 'Partners',
     description: 'Join our ecosystem as a partner. Collaborate to deliver innovative healthcare solutions.',
     features: ['API Access', 'Integration Support', 'Revenue Sharing', 'Marketing Tools'],
-    color: 'from-pink-500 to-rose-500',
+    color: 'from-primary to-accent',
+    bgColor: 'bg-primary/10',
   },
 ];
 
@@ -79,62 +87,75 @@ const StakeholderSection = () => {
     return () => unsubscribe();
   }, [progress]);
 
+  const currentStakeholder = stakeholders[activeIndex];
+
   return (
     <section
       ref={containerRef}
       id="about"
-      className="relative"
+      className="relative bg-muted/30"
       style={{ height: `${stakeholders.length * 100}vh` }}
     >
       <div className="sticky top-0 h-screen flex items-center overflow-hidden">
+        {/* Background gradient based on active stakeholder */}
+        <motion.div 
+          className={`absolute inset-0 -z-10 opacity-30 bg-gradient-to-br ${currentStakeholder.color}`}
+          key={activeIndex}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.1 }}
+          transition={{ duration: 0.5 }}
+        />
+        
         <div className="container mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="grid lg:grid-cols-2 gap-16 items-center min-h-[600px]">
             {/* Left - Content */}
-            <div className="relative">
-              {stakeholders.map((stakeholder, index) => (
+            <div className="relative min-h-[400px]">
+              <AnimatePresence mode="wait">
                 <motion.div
-                  key={stakeholder.id}
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={{
-                    opacity: activeIndex === index ? 1 : 0,
-                    y: activeIndex === index ? 0 : 50,
-                    pointerEvents: activeIndex === index ? 'auto' : 'none',
-                  }}
-                  transition={{ duration: 0.5 }}
+                  key={currentStakeholder.id}
+                  initial={{ opacity: 0, x: -50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 50 }}
+                  transition={{ duration: 0.5, ease: 'easeInOut' }}
                   className="absolute inset-0"
                 >
-                  <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r ${stakeholder.color} text-white font-medium text-sm mb-6`}>
-                    <stakeholder.icon size={16} />
-                    {stakeholder.title}
-                  </div>
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 }}
+                    className={`inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r ${currentStakeholder.color} text-white font-medium text-sm mb-6`}
+                  >
+                    <currentStakeholder.icon size={16} />
+                    {currentStakeholder.title}
+                  </motion.div>
 
                   <h2 className="font-display text-4xl lg:text-5xl font-bold text-foreground mb-6">
-                    Empowering <span className="text-gradient">{stakeholder.title}</span>
+                    Empowering <span className="text-gradient">{currentStakeholder.title}</span>
                   </h2>
 
                   <p className="text-lg text-muted-foreground mb-8 max-w-lg">
-                    {stakeholder.description}
+                    {currentStakeholder.description}
                   </p>
 
                   <div className="grid grid-cols-2 gap-4">
-                    {stakeholder.features.map((feature, i) => (
+                    {currentStakeholder.features.map((feature, i) => (
                       <motion.div
                         key={feature}
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: i * 0.1 }}
-                        className="flex items-center gap-3 p-4 bg-card rounded-xl shadow-soft"
+                        transition={{ delay: 0.3 + i * 0.1 }}
+                        className="flex items-center gap-3 p-4 bg-card rounded-xl shadow-soft border border-border/50"
                       >
-                        <div className={`w-2 h-2 rounded-full bg-gradient-to-r ${stakeholder.color}`} />
+                        <div className={`w-3 h-3 rounded-full bg-gradient-to-r ${currentStakeholder.color}`} />
                         <span className="font-medium text-foreground">{feature}</span>
                       </motion.div>
                     ))}
                   </div>
                 </motion.div>
-              ))}
+              </AnimatePresence>
             </div>
 
-            {/* Right - Circle Navigation */}
+            {/* Right - Circle Navigation with Icons */}
             <div className="relative hidden lg:flex items-center justify-center">
               <div className="relative w-[500px] h-[500px]">
                 {/* Outer Ring */}
@@ -147,19 +168,29 @@ const StakeholderSection = () => {
                     cy="250"
                     r="248"
                     fill="none"
-                    stroke="hsl(var(--primary))"
+                    stroke="url(#progressGradient)"
                     strokeWidth="4"
                     strokeDasharray={`${(activeIndex + 1) / stakeholders.length * 1558} 1558`}
                     className="transition-all duration-500"
                   />
+                  <defs>
+                    <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="hsl(var(--primary))" />
+                      <stop offset="100%" stopColor="hsl(var(--secondary))" />
+                    </linearGradient>
+                  </defs>
                 </svg>
 
-                {/* Center */}
-                <div className="absolute inset-16 rounded-full bg-gradient-hero flex items-center justify-center shadow-glow">
-                  <span className="text-primary-foreground font-display font-bold text-4xl">P</span>
-                </div>
+                {/* Center with Logo */}
+                <motion.div 
+                  className="absolute inset-20 rounded-full bg-white flex items-center justify-center shadow-glow p-6"
+                  animate={{ scale: [1, 1.02, 1] }}
+                  transition={{ duration: 3, repeat: Infinity }}
+                >
+                  <img src={plumedicalogo} alt="Plumedica" className="w-full h-full object-contain" />
+                </motion.div>
 
-                {/* Stakeholder Dots */}
+                {/* Stakeholder Icons around circle */}
                 {stakeholders.map((stakeholder, index) => {
                   const angle = (index * (360 / stakeholders.length) - 90) * (Math.PI / 180);
                   const radius = 200;
@@ -178,24 +209,38 @@ const StakeholderSection = () => {
                     >
                       <motion.div
                         animate={{
-                          scale: isActive ? 1.2 : 1,
-                          boxShadow: isActive ? '0 0 30px hsl(174 72% 40% / 0.4)' : '0 4px 20px -4px hsl(200 25% 15% / 0.1)',
+                          scale: isActive ? 1.3 : 1,
+                          boxShadow: isActive 
+                            ? '0 0 40px hsl(var(--primary) / 0.5)' 
+                            : '0 4px 20px -4px hsl(200 25% 15% / 0.1)',
                         }}
-                        className={`w-16 h-16 rounded-2xl flex items-center justify-center transition-colors ${
-                          isActive ? 'bg-gradient-hero text-primary-foreground' : 'bg-card text-muted-foreground'
+                        transition={{ duration: 0.4, ease: 'easeOut' }}
+                        className={`w-16 h-16 rounded-2xl flex items-center justify-center transition-all duration-300 ${
+                          isActive 
+                            ? `bg-gradient-to-br ${stakeholder.color} text-white` 
+                            : 'bg-card text-muted-foreground border border-border/50'
                         }`}
                       >
-                        <stakeholder.icon size={24} />
+                        <stakeholder.icon size={isActive ? 28 : 24} />
                       </motion.div>
                       
-                      {/* Pulse Ring */}
+                      {/* Active Pulse Ring */}
                       {isActive && (
-                        <motion.div
-                          initial={{ scale: 0.8, opacity: 1 }}
-                          animate={{ scale: 1.5, opacity: 0 }}
-                          transition={{ duration: 1.5, repeat: Infinity }}
-                          className="absolute inset-0 rounded-2xl bg-primary/30"
-                        />
+                        <>
+                          <motion.div
+                            initial={{ scale: 0.8, opacity: 1 }}
+                            animate={{ scale: 2, opacity: 0 }}
+                            transition={{ duration: 1.5, repeat: Infinity }}
+                            className="absolute inset-0 rounded-2xl bg-primary/20"
+                          />
+                          <motion.div
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className="absolute -bottom-8 left-1/2 -translate-x-1/2 whitespace-nowrap text-sm font-medium text-foreground"
+                          >
+                            {stakeholder.title}
+                          </motion.div>
+                        </>
                       )}
                     </motion.div>
                   );
@@ -206,28 +251,40 @@ const StakeholderSection = () => {
                   {stakeholders.map((_, index) => {
                     const angle = (index * (360 / stakeholders.length) - 90) * (Math.PI / 180);
                     const outerRadius = 200;
-                    const innerRadius = 85;
+                    const innerRadius = 100;
                     const x1 = Math.cos(angle) * innerRadius + 250;
                     const y1 = Math.sin(angle) * innerRadius + 250;
                     const x2 = Math.cos(angle) * (outerRadius - 32) + 250;
                     const y2 = Math.sin(angle) * (outerRadius - 32) + 250;
 
                     return (
-                      <line
+                      <motion.line
                         key={index}
                         x1={x1}
                         y1={y1}
                         x2={x2}
                         y2={y2}
-                        stroke={activeIndex === index ? 'hsl(174 72% 40%)' : 'hsl(var(--border))'}
-                        strokeWidth={activeIndex === index ? 2 : 1}
+                        stroke={activeIndex === index ? 'hsl(var(--primary))' : 'hsl(var(--border))'}
+                        strokeWidth={activeIndex === index ? 3 : 1}
                         strokeDasharray={activeIndex === index ? '0' : '4 4'}
-                        className="transition-all duration-300"
+                        className="transition-all duration-500"
                       />
                     );
                   })}
                 </svg>
               </div>
+            </div>
+
+            {/* Mobile Progress Indicator */}
+            <div className="lg:hidden flex justify-center gap-2 mt-8">
+              {stakeholders.map((stakeholder, index) => (
+                <motion.div
+                  key={stakeholder.id}
+                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                    activeIndex === index ? 'bg-primary w-8' : 'bg-border'
+                  }`}
+                />
+              ))}
             </div>
           </div>
         </div>

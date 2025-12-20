@@ -28,20 +28,24 @@ const Header = () => {
     >
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between h-20">
-          {/* Logo */}
+          {/* Logo with White Background */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="flex items-center gap-2"
           >
-            <motion.img
-              src={plumedicalogo}
-              alt="Plumedica Logo"
-              className="h-14 w-auto"
+            <motion.div
+              className="bg-white rounded-xl p-2 shadow-soft"
               animate={{ scale: [1, 1.02, 1] }}
               transition={{ duration: 3, repeat: Infinity }}
-            />
+            >
+              <img
+                src={plumedicalogo}
+                alt="Plumedica Logo"
+                className="h-12 w-auto"
+              />
+            </motion.div>
           </motion.div>
 
           {/* Desktop Navigation */}
@@ -86,13 +90,13 @@ const Header = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden pb-6"
+            className="md:hidden pb-6 bg-card/95 backdrop-blur-md rounded-b-xl"
           >
             {navItems.map((item) => (
               <a
                 key={item}
                 href={`#${item.toLowerCase()}`}
-                className="block py-3 text-muted-foreground hover:text-foreground transition-colors font-medium"
+                className="block py-3 px-4 text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors font-medium rounded-lg"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 {item}
