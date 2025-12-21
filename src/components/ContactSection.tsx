@@ -20,24 +20,28 @@ const contactInfo = [
   //   title: 'Visit Us',
   //   details: ['123 Healthcare Avenue', 'Medical District, HC 12345'],
   //   hoverColor: 'from-purple-500 to-violet-600',
+  //   action: null,
   // },
   {
     icon: Phone,
     title: 'Call Us',
     details: ['+91 7675860592'],
     hoverColor: 'from-green-500 to-emerald-600',
+    action: 'tel:+917675860592',
   },
   {
     icon: Mail,
     title: 'Email Us',
     details: ['info@plumedica.com'],
     hoverColor: 'from-blue-500 to-cyan-600',
+    action: 'mailto:info@plumedica.com',
   },
   {
     icon: Clock,
     title: 'Working Hours',
     details: ['Mon - Fri: 9:00 AM - 6:00 PM', 'Emergency: 24/7 Available'],
     hoverColor: 'from-orange-500 to-amber-600',
+    action: null,
   },
 ];
 
@@ -194,9 +198,15 @@ const ContactSection = () => {
                   whileHover={{ x: 5, scale: 1.02 }}
                   onMouseEnter={() => setHoveredContactIndex(index)}
                   onMouseLeave={() => setHoveredContactIndex(null)}
-                  className={`flex items-start gap-5 p-5 rounded-xl shadow-soft border transition-all duration-500 cursor-pointer ${isHovered
-                    ? 'bg-gradient-to-br ' + info.hoverColor + ' border-transparent shadow-elevated'
-                    : 'bg-card border-border/50'
+                  onClick={() => {
+                    if (info.action) {
+                      window.open(info.action, '_self');
+                    }
+                  }}
+                  className={`flex items-start gap-5 p-5 rounded-xl shadow-soft border transition-all duration-500 ${info.action ? 'cursor-pointer' : 'cursor-default'
+                    } ${isHovered
+                      ? 'bg-gradient-to-br ' + info.hoverColor + ' border-transparent shadow-elevated'
+                      : 'bg-card border-border/50'
                     }`}
                 >
                   <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-500 ${isHovered
