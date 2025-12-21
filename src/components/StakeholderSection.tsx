@@ -72,7 +72,8 @@ const stakeholders = [
 const StakeholderSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
-  
+  const [hoveredFeatureIndex, setHoveredFeatureIndex] = useState<number | null>(null);
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start start', 'end end'],
@@ -98,14 +99,14 @@ const StakeholderSection = () => {
     >
       <div className="sticky top-0 h-screen flex items-center overflow-hidden">
         {/* Background gradient based on active stakeholder */}
-        <motion.div 
+        <motion.div
           className={`absolute inset-0 -z-10 opacity-30 bg-gradient-to-br ${currentStakeholder.color}`}
           key={activeIndex}
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.1 }}
           transition={{ duration: 0.5 }}
         />
-        
+
         <div className="container mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-16 items-center min-h-[600px]">
             {/* Left - Content */}
@@ -138,18 +139,32 @@ const StakeholderSection = () => {
                   </p>
 
                   <div className="grid grid-cols-2 gap-4">
-                    {currentStakeholder.features.map((feature, i) => (
-                      <motion.div
-                        key={feature}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.3 + i * 0.1 }}
-                        className="flex items-center gap-3 p-4 bg-card rounded-xl shadow-soft border border-border/50"
-                      >
-                        <div className={`w-3 h-3 rounded-full bg-gradient-to-r ${currentStakeholder.color}`} />
-                        <span className="font-medium text-foreground">{feature}</span>
-                      </motion.div>
-                    ))}
+                    {currentStakeholder.features.map((feature, i) => {
+                      const isHovered = hoveredFeatureIndex === i;
+
+                      return (
+                        <motion.div
+                          key={feature}
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: 0.3 + i * 0.1 }}
+                          whileHover={{ scale: 1.05 }}
+                          onMouseEnter={() => setHoveredFeatureIndex(i)}
+                          onMouseLeave={() => setHoveredFeatureIndex(null)}
+                          className={`flex items-center gap-3 p-4 rounded-xl shadow-soft border transition-all duration-500 cursor-pointer ${isHovered
+                              ? `bg-gradient-to-r ${currentStakeholder.color} border-transparent shadow-elevated`
+                              : 'bg-card border-border/50'
+                            }`}
+                        >
+                          <div className={`w-3 h-3 rounded-full transition-all duration-500 ${isHovered
+                              ? 'bg-white'
+                              : `bg-gradient-to-r ${currentStakeholder.color}`
+                            }`} />
+                          <span className={`font-medium transition-colors duration-300 ${isHovered ? 'text-white' : 'text-foreground'
+                            }`}>{feature}</span>
+                        </motion.div>
+                      );
+                    })}
                   </div>
                 </motion.div>
               </AnimatePresence>
@@ -160,7 +175,7 @@ const StakeholderSection = () => {
               <div className="relative w-[500px] h-[500px]">
                 {/* Outer Ring */}
                 <div className="absolute inset-0 rounded-full border-2 border-border" />
-                
+
                 {/* Progress Ring */}
                 <svg className="absolute inset-0 w-full h-full -rotate-90">
                   <circle
@@ -182,12 +197,13 @@ const StakeholderSection = () => {
                 </svg>
 
                 {/* Center with Logo */}
-                <motion.div 
-                  className="absolute inset-20 rounded-full bg-white flex items-center justify-center shadow-glow p-6"
+                <motion.div
+                  key={activeIndex}
+                  className={`absolute inset-20 rounded-full flex items-center justify-center shadow-glow p-6 transition-colors duration-500 ${currentStakeholder.bgColor}`}
                   animate={{ scale: [1, 1.02, 1] }}
                   transition={{ duration: 3, repeat: Infinity }}
                 >
-                  <img src={plumedicalogo} alt="Plumedica" className="w-full h-full object-contain" />
+                  <img src={plumedicalogo} alt="Plumedica" className="rounded-full w-full h-full object-contain" />
                 </motion.div>
 
                 {/* Stakeholder Icons around circle */}
@@ -210,20 +226,19 @@ const StakeholderSection = () => {
                       <motion.div
                         animate={{
                           scale: isActive ? 1.3 : 1,
-                          boxShadow: isActive 
-                            ? '0 0 40px hsl(var(--primary) / 0.5)' 
+                          boxShadow: isActive
+                            ? '0 0 40px hsl(var(--primary) / 0.5)'
                             : '0 4px 20px -4px hsl(200 25% 15% / 0.1)',
                         }}
                         transition={{ duration: 0.4, ease: 'easeOut' }}
-                        className={`w-16 h-16 rounded-2xl flex items-center justify-center transition-all duration-300 ${
-                          isActive 
-                            ? `bg-gradient-to-br ${stakeholder.color} text-white` 
-                            : 'bg-card text-muted-foreground border border-border/50'
-                        }`}
+                        className={`w-16 h-16 rounded-2xl flex items-center justify-center transition-all duration-300 ${isActive
+                          ? `bg-gradient-to-br ${stakeholder.color} text-white`
+                          : 'bg-card text-muted-foreground border border-border/50'
+                          }`}
                       >
                         <stakeholder.icon size={isActive ? 28 : 24} />
                       </motion.div>
-                      
+
                       {/* Active Pulse Ring */}
                       {isActive && (
                         <>
@@ -280,9 +295,8 @@ const StakeholderSection = () => {
               {stakeholders.map((stakeholder, index) => (
                 <motion.div
                   key={stakeholder.id}
-                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                    activeIndex === index ? 'bg-primary w-8' : 'bg-border'
-                  }`}
+                  className={`w-3 h-3 rounded-full transition-all duration-300 ${activeIndex === index ? 'bg-primary w-8' : 'bg-border'
+                    }`}
                 />
               ))}
             </div>

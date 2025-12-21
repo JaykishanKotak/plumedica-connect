@@ -22,9 +22,8 @@ const Header = () => {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: 'easeOut' }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-card/95 backdrop-blur-md shadow-soft' : 'bg-transparent'
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-card/95 backdrop-blur-md shadow-soft' : 'bg-transparent'
+        }`}
     >
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between h-20">
@@ -36,14 +35,14 @@ const Header = () => {
             className="flex items-center gap-2"
           >
             <motion.div
-              className="bg-white rounded-xl p-2 shadow-soft"
+              className="bg-white rounded-full p-2 shadow-soft"
               animate={{ scale: [1, 1.02, 1] }}
               transition={{ duration: 3, repeat: Infinity }}
             >
               <img
                 src={plumedicalogo}
                 alt="Plumedica Logo"
-                className="h-12 w-auto"
+                className="h-12 w-auto "
               />
             </motion.div>
           </motion.div>
@@ -63,7 +62,7 @@ const Header = () => {
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300" />
               </motion.a>
             ))}
-            <motion.button
+            {/* <motion.button
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.4, delay: 0.8 }}
@@ -72,7 +71,7 @@ const Header = () => {
               className="px-6 py-2.5 bg-gradient-hero text-primary-foreground rounded-lg font-semibold shadow-soft hover:shadow-elevated transition-shadow"
             >
               Get Started
-            </motion.button>
+            </motion.button> */}
           </nav>
 
           {/* Mobile Menu Button */}

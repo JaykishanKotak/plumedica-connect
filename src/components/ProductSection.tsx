@@ -1,9 +1,9 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import { 
-  Smartphone, 
-  Globe, 
-  Shield, 
+import {
+  Smartphone,
+  Globe,
+  Shield,
   Cloud,
   Check,
   ArrowRight,
@@ -98,41 +98,36 @@ const ProductSection = () => {
                 whileHover={{ y: -8 }}
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
-                className={`group relative p-8 rounded-2xl border transition-all duration-500 cursor-pointer ${
-                  isHovered 
-                    ? 'bg-gradient-to-br ' + product.color + ' border-transparent shadow-elevated' 
+                className={`group relative p-8 rounded-2xl border transition-all duration-500 cursor-pointer ${isHovered
+                    ? 'bg-gradient-to-br ' + product.color + ' border-transparent shadow-elevated'
                     : 'bg-card border-border/50 shadow-soft'
-                }`}
+                  }`}
               >
                 {/* Icon */}
-                <motion.div 
-                  className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-6 transition-all duration-500 ${
-                    isHovered 
-                      ? 'bg-white/20' 
+                <motion.div
+                  className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-6 transition-all duration-500 ${isHovered
+                      ? 'bg-white/20'
                       : 'bg-gradient-to-br from-primary/20 to-secondary/20'
-                  }`}
+                    }`}
                   animate={{ rotate: isHovered ? 5 : 0, scale: isHovered ? 1.1 : 1 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <IconComponent className={`w-8 h-8 transition-colors duration-300 ${
-                    isHovered ? 'text-white' : 'text-primary'
-                  }`} />
+                  <IconComponent className={`w-8 h-8 transition-colors duration-300 ${isHovered ? 'text-white' : 'text-primary'
+                    }`} />
                 </motion.div>
 
                 {/* Content */}
-                <h3 className={`font-display font-bold text-2xl mb-3 transition-colors duration-300 ${
-                  isHovered ? 'text-white' : 'text-foreground'
-                }`}>
+                <h3 className={`font-display font-bold text-2xl mb-3 transition-colors duration-300 ${isHovered ? 'text-white' : 'text-foreground'
+                  }`}>
                   {product.title}
                 </h3>
-                <p className={`mb-6 transition-colors duration-300 ${
-                  isHovered ? 'text-white/90' : 'text-muted-foreground'
-                }`}>
+                <p className={`mb-6 transition-colors duration-300 ${isHovered ? 'text-white/90' : 'text-muted-foreground'
+                  }`}>
                   {product.description}
                 </p>
 
                 {/* Features */}
-                <ul className="space-y-2 mb-6">
+                {/* <ul className="space-y-2 mb-6">
                   {product.features.map((feature) => (
                     <li 
                       key={feature}
@@ -146,13 +141,12 @@ const ProductSection = () => {
                       {feature}
                     </li>
                   ))}
-                </ul>
+                </ul> */}
 
                 {/* CTA */}
                 <motion.div
-                  className={`inline-flex items-center gap-2 font-semibold transition-colors duration-300 ${
-                    isHovered ? 'text-white' : 'text-primary'
-                  }`}
+                  className={`inline-flex items-center gap-2 font-semibold transition-colors duration-300 ${isHovered ? 'text-white' : 'text-primary'
+                    }`}
                   whileHover={{ x: 5 }}
                 >
                   Learn More <ArrowRight className="w-4 h-4" />

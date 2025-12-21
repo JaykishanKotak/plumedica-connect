@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import plumedicalogo from '@/assets/plumedica-logo.png';
+import { P } from 'node_modules/framer-motion/dist/types.d-DagZKalS';
 
 const HeroSection = () => {
   return (
@@ -34,7 +35,7 @@ const HeroSection = () => {
           transition={{ duration: 10, repeat: Infinity, delay: 2 }}
           className="absolute bottom-20 right-10 w-96 h-96 bg-secondary/15 rounded-full blur-3xl"
         />
-        
+
         {/* Heartbeat Wave Effect */}
         <svg className="absolute bottom-0 left-0 w-full h-32 opacity-20" viewBox="0 0 1200 100" preserveAspectRatio="none">
           <motion.path
@@ -59,7 +60,7 @@ const HeroSection = () => {
             className="relative"
           >
             <motion.div
-              animate={{ 
+              animate={{
                 scale: [1, 1.05, 1],
               }}
               transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
@@ -68,13 +69,13 @@ const HeroSection = () => {
                 filter: 'drop-shadow(0 0 50px hsl(210 70% 45% / 0.5))',
               }}
             >
-              <img 
-                src={plumedicalogo} 
-                alt="Plumedica" 
-                className="w-full h-full object-contain"
+              <img
+                src={plumedicalogo}
+                alt="Plumedica"
+                className="w-full h-full object-contain rounded-full"
               />
             </motion.div>
-            
+
             {/* Pulse Ring Effect */}
             <motion.div
               animate={{ scale: [1, 1.5], opacity: [0.5, 0] }}
@@ -96,8 +97,11 @@ const HeroSection = () => {
             className="mt-8"
           >
             <h1 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-foreground">
-              Your Complete <span className="text-gradient">Healthcare</span> Ecosystem
+              A Complete <span className="text-gradient">Healthcare</span> Ecosystem
             </h1>
+            <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
+              <span className="text-gradient font-semibold">Bridging Healthcare, Building Trust</span> | <span className="text-gradient font-semibold">Creating a Unified Health Ecosystem</span> | Innovation drives us, impact inspires us, and a <span className="text-gradient font-semibold">healthier, connected future</span> is our mission.
+            </p>
             <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
               Connecting patients, doctors, hospitals, pharmacies, and diagnostics in one unified platform.
             </p>

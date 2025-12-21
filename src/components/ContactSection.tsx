@@ -7,30 +7,35 @@ import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 
 const contactInfo = [
-  {
-    icon: MapPin,
-    title: 'Visit Us',
-    details: ['123 Healthcare Avenue', 'Medical District, HC 12345'],
-  },
+  // {
+  //   icon: MapPin,
+  //   title: 'Visit Us',
+  //   details: ['123 Healthcare Avenue', 'Medical District, HC 12345'],
+  //   hoverColor: 'from-purple-500 to-violet-600',
+  // },
   {
     icon: Phone,
     title: 'Call Us',
-    details: ['+1 (800) PLUMEDICA', '+1 (555) 123-4567'],
+    details: ['+91 7675860592'],
+    hoverColor: 'from-green-500 to-emerald-600',
   },
   {
     icon: Mail,
     title: 'Email Us',
-    details: ['info@plumedica.com', 'support@plumedica.com'],
+    details: ['info@plumedica.com'],
+    hoverColor: 'from-blue-500 to-cyan-600',
   },
   {
     icon: Clock,
     title: 'Working Hours',
     details: ['Mon - Fri: 9:00 AM - 6:00 PM', 'Emergency: 24/7 Available'],
+    hoverColor: 'from-orange-500 to-amber-600',
   },
 ];
 
 const ContactSection = () => {
   const { toast } = useToast();
+  const [hoveredContactIndex, setHoveredContactIndex] = useState<number | null>(null);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -39,6 +44,7 @@ const ContactSection = () => {
     message: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -47,6 +53,7 @@ const ContactSection = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setShowSuccess(false);
 
     // Simulate form submission
     await new Promise(resolve => setTimeout(resolve, 1000));
@@ -58,6 +65,10 @@ const ContactSection = () => {
 
     setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
     setIsSubmitting(false);
+    setShowSuccess(true);
+
+    // Hide success message after 5 seconds
+    setTimeout(() => setShowSuccess(false), 5000);
   };
 
   return (
@@ -161,8 +172,8 @@ const ContactSection = () => {
                 />
               </div>
 
-              <Button 
-                type="submit" 
+              <Button
+                type="submit"
                 disabled={isSubmitting}
                 className="w-full bg-gradient-hero text-primary-foreground font-semibold py-6 shadow-elevated hover:shadow-glow transition-all duration-300"
               >
@@ -174,6 +185,21 @@ const ContactSection = () => {
                   </>
                 )}
               </Button>
+
+              {/* Success Message */}
+              {showSuccess && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="flex items-center gap-2 p-4 bg-green-500/10 border border-green-500/30 rounded-lg text-green-600 dark:text-green-400"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span className="font-medium">Message sent successfully! We'll get back to you within 24 hours.</span>
+                </motion.div>
+              )}
             </form>
           </motion.div>
 
@@ -185,27 +211,42 @@ const ContactSection = () => {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="space-y-6"
           >
-            {contactInfo.map((info, index) => (
-              <motion.div
-                key={info.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{ x: 5, scale: 1.02 }}
-                className="group flex items-start gap-5 p-5 bg-card rounded-xl shadow-soft border border-border/50 hover:shadow-elevated hover:border-primary/30 transition-all duration-300 cursor-pointer"
-              >
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center flex-shrink-0 group-hover:from-primary group-hover:to-secondary transition-all duration-300">
-                  <info.icon className="w-6 h-6 text-primary group-hover:text-white transition-colors duration-300" />
-                </div>
-                <div>
-                  <h4 className="font-display font-bold text-lg text-foreground mb-1 group-hover:text-primary transition-colors duration-300">{info.title}</h4>
-                  {info.details.map((detail, i) => (
-                    <p key={i} className="text-muted-foreground text-sm">{detail}</p>
-                  ))}
-                </div>
-              </motion.div>
-            ))}
+            {contactInfo.map((info, index) => {
+              const isHovered = hoveredContactIndex === index;
+
+              return (
+                <motion.div
+                  key={info.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  whileHover={{ x: 5, scale: 1.02 }}
+                  onMouseEnter={() => setHoveredContactIndex(index)}
+                  onMouseLeave={() => setHoveredContactIndex(null)}
+                  className={`flex items-start gap-5 p-5 rounded-xl shadow-soft border transition-all duration-500 cursor-pointer ${isHovered
+                    ? 'bg-gradient-to-br ' + info.hoverColor + ' border-transparent shadow-elevated'
+                    : 'bg-card border-border/50'
+                    }`}
+                >
+                  <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-500 ${isHovered
+                    ? 'bg-white/20'
+                    : 'bg-gradient-to-br from-primary/20 to-secondary/20'
+                    }`}>
+                    <info.icon className={`w-6 h-6 transition-colors duration-300 ${isHovered ? 'text-white' : 'text-primary'
+                      }`} />
+                  </div>
+                  <div>
+                    <h4 className={`font-display font-bold text-lg mb-1 transition-colors duration-300 ${isHovered ? 'text-white' : 'text-foreground'
+                      }`}>{info.title}</h4>
+                    {info.details.map((detail, i) => (
+                      <p key={i} className={`text-sm transition-colors duration-300 ${isHovered ? 'text-white/90' : 'text-muted-foreground'
+                        }`}>{detail}</p>
+                    ))}
+                  </div>
+                </motion.div>
+              );
+            })}
 
             {/* CTA Box */}
             <motion.div
