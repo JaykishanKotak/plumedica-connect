@@ -229,7 +229,7 @@ const ContactSection = () => {
             })}
 
             {/* CTA Box */}
-            <motion.div
+            {/* <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -247,7 +247,7 @@ const ContactSection = () => {
               >
                 Get Started <ArrowRight className="w-4 h-4" />
               </motion.button>
-            </motion.div>
+            </motion.div> */}
           </motion.div>
         </div>
       </div>
