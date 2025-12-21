@@ -4,7 +4,15 @@ import { Send, MapPin, Phone, Mail, Clock, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { useToast } from '@/hooks/use-toast';
+import { useContactForm } from '@/hooks/useContactForm';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
 
 const contactInfo = [
   // {
@@ -34,42 +42,8 @@ const contactInfo = [
 ];
 
 const ContactSection = () => {
-  const { toast } = useToast();
   const [hoveredContactIndex, setHoveredContactIndex] = useState<number | null>(null);
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    subject: '',
-    message: '',
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showSuccess, setShowSuccess] = useState(false);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setShowSuccess(false);
-
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1000));
-
-    toast({
-      title: "Message Sent!",
-      description: "We'll get back to you within 24 hours.",
-    });
-
-    setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
-    setIsSubmitting(false);
-    setShowSuccess(true);
-
-    // Hide success message after 5 seconds
-    setTimeout(() => setShowSuccess(false), 5000);
-  };
+  const { form, onSubmit } = useContactForm();
 
   return (
     <section id="contact" className="py-20 relative overflow-hidden bg-muted/30">
@@ -103,104 +77,100 @@ const ContactSection = () => {
             className="bg-card rounded-2xl shadow-soft border border-border/50 p-8"
           >
             <h3 className="font-display text-2xl font-bold text-foreground mb-6">Send us a Message</h3>
-            <form onSubmit={handleSubmit} className="space-y-5">
-              <div className="grid sm:grid-cols-2 gap-5">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">Full Name</label>
-                  <Input
-                    id="name"
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+                <div className="grid sm:grid-cols-2 gap-5">
+                  <FormField
+                    control={form.control}
                     name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    placeholder="John Doe"
-                    required
-                    className="bg-background"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Full Name</FormLabel>
+                        <FormControl>
+                          <Input placeholder="John Doe" className="bg-background" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
                   />
-                </div>
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">Email Address</label>
-                  <Input
-                    id="email"
+                  <FormField
+                    control={form.control}
                     name="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="john@example.com"
-                    required
-                    className="bg-background"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Email Address</FormLabel>
+                        <FormControl>
+                          <Input type="email" placeholder="john@example.com" className="bg-background" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
                   />
                 </div>
-              </div>
 
-              <div className="grid sm:grid-cols-2 gap-5">
-                <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-foreground mb-2">Phone Number</label>
-                  <Input
-                    id="phone"
+                <div className="grid sm:grid-cols-2 gap-5">
+                  <FormField
+                    control={form.control}
                     name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    placeholder="+1 (555) 123-4567"
-                    className="bg-background"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Phone Number</FormLabel>
+                        <FormControl>
+                          <Input placeholder="+1 (555) 123-4567" className="bg-background" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
                   />
-                </div>
-                <div>
-                  <label htmlFor="subject" className="block text-sm font-medium text-foreground mb-2">Subject</label>
-                  <Input
-                    id="subject"
+                  <FormField
+                    control={form.control}
                     name="subject"
-                    value={formData.subject}
-                    onChange={handleChange}
-                    placeholder="How can we help?"
-                    required
-                    className="bg-background"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Subject</FormLabel>
+                        <FormControl>
+                          <Input placeholder="How can we help?" className="bg-background" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
                   />
                 </div>
-              </div>
 
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium text-foreground mb-2">Message</label>
-                <Textarea
-                  id="message"
+                <FormField
+                  control={form.control}
                   name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  placeholder="Tell us about your requirements..."
-                  rows={4}
-                  required
-                  className="bg-background resize-none"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Message</FormLabel>
+                      <FormControl>
+                        <Textarea
+                          placeholder="Tell us about your requirements..."
+                          rows={4}
+                          className="bg-background resize-none"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
                 />
-              </div>
 
-              <Button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full bg-gradient-hero text-primary-foreground font-semibold py-6 shadow-elevated hover:shadow-glow transition-all duration-300"
-              >
-                {isSubmitting ? (
-                  'Sending...'
-                ) : (
-                  <>
-                    Send Message <Send className="w-4 h-4 ml-2" />
-                  </>
-                )}
-              </Button>
-
-              {/* Success Message */}
-              {showSuccess && (
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  className="flex items-center gap-2 p-4 bg-green-500/10 border border-green-500/30 rounded-lg text-green-600 dark:text-green-400"
+                <Button
+                  type="submit"
+                  disabled={form.formState.isSubmitting}
+                  className="w-full bg-gradient-hero text-primary-foreground font-semibold py-6 shadow-elevated hover:shadow-glow transition-all duration-300"
                 >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  <span className="font-medium">Message sent successfully! We'll get back to you within 24 hours.</span>
-                </motion.div>
-              )}
-            </form>
+                  {form.formState.isSubmitting ? (
+                    'Sending...'
+                  ) : (
+                    <>
+                      Send Message <Send className="w-4 h-4 ml-2" />
+                    </>
+                  )}
+                </Button>
+              </form>
+            </Form>
           </motion.div>
 
           {/* Contact Info */}
