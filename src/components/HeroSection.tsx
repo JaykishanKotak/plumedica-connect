@@ -100,7 +100,7 @@ const HeroSection = () => {
               A Complete <span className="text-gradient">Healthcare</span> Ecosystem
             </h1>
             <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
-              <span className="text-gradient font-semibold">Bridging Healthcare, Building Trust</span> | <span className="text-gradient font-semibold">Creating a Unified Health Ecosystem</span> | Innovation drives us, impact inspires us, and a <span className="text-gradient font-semibold">healthier, connected future</span> is our mission.
+              <span className="text-gradient font-semibold">Bringing Freedom To HealthCare</span> | <span className="text-gradient font-semibold">Creating a Unified Health Ecosystem</span> | Innovation drives us, impact inspires us, and a <span className="text-gradient font-semibold">healthier, connected future</span> is our mission.
             </p>
             <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
               Connecting patients, doctors, hospitals, pharmacies, and diagnostics in one unified platform.

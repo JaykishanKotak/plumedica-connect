@@ -25,11 +25,11 @@ const Footer = () => {
             <div className="space-y-3">
               <a href="mailto:contact@plumedica.com" className="flex items-center gap-3 text-background/70 hover:text-background transition-colors">
                 <Mail size={18} />
-                contact@plumedica.com
+                info@plumedica.com
               </a>
               <a href="tel:+1234567890" className="flex items-center gap-3 text-background/70 hover:text-background transition-colors">
                 <Phone size={18} />
-                +1 (234) 567-890
+                +91 7675860592
               </a>
               <div className="flex items-center gap-3 text-background/70">
                 <MapPin size={18} />
@@ -61,7 +61,7 @@ const Footer = () => {
         {/* Bottom */}
         <div className="pt-8 border-t border-background/10 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-background/50 text-sm">
-            © 2024 Plumedica. All rights reserved.
+            © 2026 Plumedica. All rights reserved.
           </p>
           <div className="flex gap-6">
             {['Facebook', 'Twitter', 'LinkedIn', 'Instagram'].map((social) => (
